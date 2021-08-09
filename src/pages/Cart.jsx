@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Feito por Lucas Lima.
 class Cart extends React.Component {
   constructor(props) {
     super(props);
