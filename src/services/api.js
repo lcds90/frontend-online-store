@@ -1,3 +1,4 @@
+// Feito por JoaoSantosP
 export async function getCategories() {
   try {
     const fetchResult = await fetch('https://api.mercadolibre.com/sites/MLB/categories');
