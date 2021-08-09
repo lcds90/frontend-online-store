@@ -11,9 +11,10 @@ class SearchBar extends React.Component {
   }
 
   handleChange = ({ target: { value } }) => {
+    const { getStateValue } = this.props;
     this.setState({
       searchText: value,
-    });
+    }, () => getStateValue(this.state.searchText));
   }
 
   render() {
@@ -24,6 +25,7 @@ class SearchBar extends React.Component {
         <input
           id="searchbar"
           value={ searchText }
+          name="search"
           onChange={ this.handleChange }
         />
       </label>

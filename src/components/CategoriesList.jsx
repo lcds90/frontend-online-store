@@ -6,6 +6,7 @@ class CategoriesList extends Component {
     super(props);
     this.state = {
       categories: [],
+      categoryValue: '',
     };
   }
 
@@ -18,20 +19,27 @@ class CategoriesList extends Component {
     this.setState({ categories });
   }
 
+  handleChange = ({ target: { value } }) => {
+    const { getStateValue } = this.props;
+    this.setState({
+      categoryValue: value,
+    }, () => getStateValue(this.state.categoryValue));
+  }
+
   render() {
     const { categories } = this.state;
     return (
       <aside>
         <ul>
           {categories.map(({ id, name }) => (
-            <li key={ id }>
+            <li key={ id } onChange={ this.handleChange }>
               <label htmlFor={ `input-${id}` }>
                 <input
                   id={ `input-${id}` }
                   type="radio"
                   data-testid="category"
-                  name="categories"
-                  value={ name }
+                  name="category"
+                  value={ id }
                 />
                 {name}
               </label>
