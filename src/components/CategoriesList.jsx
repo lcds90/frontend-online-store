@@ -21,12 +21,13 @@ class CategoriesList extends Component {
   }
 
   handleClick = ({ target: { name, value } }) => {
-    const { getQueryValue } = this.props;
+    const { getQueryValue, fetchCategory } = this.props;
     this.setState({
       [name]: value,
     }, () => {
       const { state } = this;
       getQueryValue(name, state[name]);
+      fetchCategory();
     });
   }
 
@@ -58,6 +59,7 @@ class CategoriesList extends Component {
 
 CategoriesList.propTypes = {
   getQueryValue: PropTypes.func.isRequired,
+  fetchCategory: PropTypes.func.isRequired,
 };
 
 export default CategoriesList;

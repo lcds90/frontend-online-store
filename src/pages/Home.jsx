@@ -30,7 +30,10 @@ class Home extends React.Component {
     return (
       <div>
         <SearchBar getQueryValue={ this.getQueryValue } />
-        <CategoriesList getQueryValue={ this.getQueryValue } />
+        <CategoriesList
+          fetchCategory={ this.fetchList }
+          getQueryValue={ this.getQueryValue }
+        />
         <button
           data-testid="query-button"
           type="submit"
