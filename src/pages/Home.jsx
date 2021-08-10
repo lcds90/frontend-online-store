@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CategoriesList from '../components/CategoriesList';
-import SearchBar from '../components/SearchBar';
-import ProductList from '../components/ProductList';
+import { CategoriesList, SearchBar, ProductList } from '../components';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 
 class Home extends React.Component {
