@@ -42,7 +42,7 @@ class Home extends React.Component {
           Pesquisar
 
         </button>
-        <Link data-testid="shopping-cart-button" to="/cart" />
+        <Link data-testid="shopping-cart-button" to="/cart">Carrinho</Link>
         <ProductList products={ results } />
       </div>
     );
