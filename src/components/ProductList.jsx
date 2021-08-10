@@ -1,47 +1,44 @@
 import React from 'react';
-import { getProductsFromCategoryAndQuery } from '../services/api'
+import PropTypes from 'prop-types';
 import ProductCard from './ProductCard';
 
 class ProductList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      results: [],
-      search: this.props.search,
-      category: this.props.category,
-    }
+      products: [...props.products],
+    };
   }
 
-  componentDidMount() {
-    this.fetchList();
+  componentDidUpdate(prevProps) {
+    const { products } = this.props;
+    if (prevProps.products !== products) this.setProducts(products);
   }
 
-  fetchList = () => {
-    /* const { search, category } = this.props;
-    this.setState({ query: search, idCategory: category }, async () => {
-        const { query, idCategory } = this.state;
-        const { results } = await getProductsFromCategoryAndQuery(idCategory, query);
-        this.setState({ results });
-    }) */
-  }
+  setProducts = (products) => (this.setState({ products }))
 
   render() {
-    const {results} = this.state;
-    const { search, category } = this.props;
+    const { products } = this.state;
     return (
       <div>
         <h3>Lista de Produtos</h3>
-        <p>{search}</p>
-        <p>{category}</p>
         {
-        results.map((result) => (
-          <ProductCard key={result.id} />
-        ))
+          products.map((product) => (
+            <ProductCard product={ product } key={ product.id } />
+          ))
         }
-        
+
       </div>
     );
   }
 }
+
+ProductList.defaultProps = {
+  products: [],
+};
+
+ProductList.propTypes = {
+  products: PropTypes.arrayOf(PropTypes.object),
+};
 
 export default ProductList;

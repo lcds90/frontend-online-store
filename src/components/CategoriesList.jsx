@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { getCategories } from '../services/api';
 
 class CategoriesList extends Component {
@@ -6,7 +7,7 @@ class CategoriesList extends Component {
     super(props);
     this.state = {
       categories: [],
-      categoryValue: '',
+      categoryId: '',
     };
   }
 
@@ -19,11 +20,14 @@ class CategoriesList extends Component {
     this.setState({ categories });
   }
 
-  handleChange = ({ target: { value } }) => {
-    const { getStateValue } = this.props;
+  handleClick = ({ target: { name, value } }) => {
+    const { getQueryValue } = this.props;
     this.setState({
-      categoryValue: value,
-    }, () => getStateValue(this.state.categoryValue));
+      [name]: value,
+    }, () => {
+      const { state } = this;
+      getQueryValue(name, state[name]);
+    });
   }
 
   render() {
@@ -32,14 +36,15 @@ class CategoriesList extends Component {
       <aside>
         <ul>
           {categories.map(({ id, name }) => (
-            <li key={ id } onChange={ this.handleChange }>
+            <li key={ id }>
               <label htmlFor={ `input-${id}` }>
                 <input
                   id={ `input-${id}` }
                   type="radio"
                   data-testid="category"
-                  name="category"
+                  name="categoryId"
                   value={ id }
+                  onClick={ this.handleClick }
                 />
                 {name}
               </label>
@@ -50,5 +55,9 @@ class CategoriesList extends Component {
     );
   }
 }
+
+CategoriesList.propTypes = {
+  getQueryValue: PropTypes.func.isRequired,
+};
 
 export default CategoriesList;
