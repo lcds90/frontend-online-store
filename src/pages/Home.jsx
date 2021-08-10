@@ -3,36 +3,37 @@ import { Link } from 'react-router-dom';
 import CategoriesList from '../components/CategoriesList';
 import SearchBar from '../components/SearchBar';
 import ProductList from '../components/ProductList';
+import { getProductsFromCategoryAndQuery } from '../services/api';
 
 class Home extends React.Component {
-
   constructor() {
     super();
     this.state = {
+      results: [],
       search: '',
-      categoryValue: '',
-    }
+      categoryId: '',
+    };
   }
 
-  handleChangeText = (value) => {
-    this.setState({
-      search: value,
-    });
+  getQueryValue = (name, value) => {
+    this.setState({ [name]: value });
   }
 
-  handleChangeCat = (value) => {
-    this.setState({
-      categoryValue: value,
-    });
+  fetchList = async () => {
+    const { categoryId, search } = this.state;
+    const { results } = await getProductsFromCategoryAndQuery(categoryId, search);
+    this.setState({ results });
   }
 
   render() {
+    const { results } = this.state;
     return (
       <div>
-        <SearchBar getStateValue={ this.handleChangeText }/>
-        <CategoriesList getStateValue={ this.handleChangeCat } />
+        <SearchBar getQueryValue={ this.getQueryValue } />
+        <CategoriesList getQueryValue={ this.getQueryValue } />
+        <button data-testid="query-button" type="submit" onClick={ this.fetchList }>Pesquisar</button>
         <Link data-testid="shopping-cart-button" to="/cart" />
-        <ProductList search={ this.state.search } category={ this.state.categoryValue }/>
+        <ProductList products={ results } />
       </div>
     );
   }

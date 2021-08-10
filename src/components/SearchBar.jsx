@@ -6,25 +6,29 @@ class SearchBar extends React.Component {
     super(props);
 
     this.state = {
-      searchText: '',
+      search: '',
     };
   }
 
-  handleChange = ({ target: { value } }) => {
-    const { getStateValue } = this.props;
+  handleChange = ({ target: { name, value } }) => {
+    const { getQueryValue } = this.props;
     this.setState({
-      searchText: value,
-    }, () => getStateValue(this.state.searchText));
+      [name]: value,
+    }, () => {
+      const { state } = this;
+      getQueryValue(name, state[name]);
+    });
   }
 
   render() {
-    const { searchText } = this.state;
+    const { search } = this.state;
     return (
-      <label data-testid="home-initial-message" htmlFor="searchbar">
+      <label data-testid="home-initial-message" htmlFor="searchBar">
         Digite algum termo de pesquisa ou escolha uma categoria.
         <input
-          id="searchbar"
-          value={ searchText }
+          data-testid="query-input"
+          id="searchBar"
+          value={ search }
           name="search"
           onChange={ this.handleChange }
         />
