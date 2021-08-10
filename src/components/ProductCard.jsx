@@ -1,15 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import ButtonAdd from './ButtonAdd';
 
 class ProductCard extends React.Component {
-  handleClick = () => {
-    const { product: { id } } = this.props;
-    const localObject = JSON.parse(localStorage.getItem('cartLcist')) || [];
-    localObject.push(id);
-    localStorage.setItem('cartList', JSON.stringify(localObject));
-  }
-
   render() {
     const { product: { id, title, thumbnail, price } } = this.props;
     const { product } = this.props;
@@ -23,13 +17,7 @@ class ProductCard extends React.Component {
         { product.title }
         <img src={ product.thumbnail } alt="" />
         {product.price}
-        <button
-          data-testid="product-add-to-cart"
-          onClick={ this.handleClick }
-          type="submit"
-        >
-          Add
-        </button>
+        <ButtonAdd id={ id } testId="product-add-to-cart">Add</ButtonAdd>
       </div>
     );
   }

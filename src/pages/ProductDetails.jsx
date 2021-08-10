@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import ButtonAdd from '../components/ButtonAdd';
 
 class ProductDetails extends React.Component {
   constructor(props) {
@@ -24,11 +26,14 @@ class ProductDetails extends React.Component {
 
   render() {
     const { product: { title } } = this.state;
+    const { match: { params: { id } } } = this.props;
     return (
       <div>
+        <Link data-testid="shopping-cart-button" to="/cart">Carrinho</Link>
         <h2 data-testid="product-detail-name">
           {title}
         </h2>
+        <ButtonAdd id={ id } testId="product-detail-add-to-cart">Add</ButtonAdd>
       </div>
     );
   }
