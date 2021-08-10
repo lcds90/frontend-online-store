@@ -31,7 +31,14 @@ class Home extends React.Component {
       <div>
         <SearchBar getQueryValue={ this.getQueryValue } />
         <CategoriesList getQueryValue={ this.getQueryValue } />
-        <button data-testid="query-button" type="submit" onClick={ this.fetchList }>Pesquisar</button>
+        <button
+          data-testid="query-button"
+          type="submit"
+          onClick={ this.fetchList }
+        >
+          Pesquisar
+
+        </button>
         <Link data-testid="shopping-cart-button" to="/cart" />
         <ProductList products={ results } />
       </div>

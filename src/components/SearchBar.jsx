@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 // Feito por Guilherme.
 class SearchBar extends React.Component {
   constructor(props) {
@@ -36,5 +36,9 @@ class SearchBar extends React.Component {
     );
   }
 }
+
+SearchBar.propTypes = {
+  getQueryValue: PropTypes.func.isRequired,
+};
 
 export default SearchBar;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ProductCard from './ProductCard';
 
 class ProductList extends React.Component {
@@ -10,12 +11,11 @@ class ProductList extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.products !== this.props.products) {
-      this.setState({
-        products: this.props.products,
-      });
-    }
+    const { products } = this.props;
+    if (prevProps.products !== products) this.setProducts(products);
   }
+
+  setProducts = (products) => (this.setState({ products }))
 
   render() {
     const { products } = this.state;
@@ -32,5 +32,13 @@ class ProductList extends React.Component {
     );
   }
 }
+
+ProductList.defaultProps = {
+  products: [],
+};
+
+ProductList.propTypes = {
+  products: PropTypes.arrayOf(PropTypes.object),
+};
 
 export default ProductList;
