@@ -1,4 +1,5 @@
 import React from 'react';
+import { ProductCart } from '../components';
 
 // Feito por Lucas Lima.
 class Cart extends React.Component {
@@ -33,13 +34,8 @@ class Cart extends React.Component {
         <div>
           {
             products.map((product) => (
-              <p
-                key={ product.id }
-                data-testid="shopping-cart-product-name"
-              >
-                {product.title}
-                <span data-testid="shopping-cart-product-quantity">1</span>
-              </p>))
+              <ProductCart key={ product.title } product={ product } />
+            ))
           }
         </div>
       </div>
