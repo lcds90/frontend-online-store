@@ -9,10 +9,10 @@ class ButtonQuantity extends Component {
     };
   }
 
-    handleSubmit = () => {
+/*     handleSubmit = () => {
       const { props: { onSubmit }, state: { quantity } } = this;
       onSubmit(quantity);
-    }
+    } */
 
     handleClick = ({ target: { name } }) => {
       const { quantity } = this.state;
@@ -58,8 +58,8 @@ class ButtonQuantity extends Component {
     }
 }
 
-ButtonQuantity.propTypes = {
+/* ButtonQuantity.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-};
+}; */
 
 export default ButtonQuantity;

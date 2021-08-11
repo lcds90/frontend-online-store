@@ -26,7 +26,7 @@ class Home extends React.Component {
   render() {
     const { results } = this.state;
     return (
-      <div>
+      <main>
         <SearchBar getQueryValue={ this.getQueryValue } />
         <CategoriesList
           fetchCategory={ this.fetchList }
@@ -42,7 +42,7 @@ class Home extends React.Component {
         </button>
         <Link data-testid="shopping-cart-button" to="/cart">Carrinho</Link>
         <ProductList products={ results } />
-      </div>
+      </main>
     );
   }
 }
