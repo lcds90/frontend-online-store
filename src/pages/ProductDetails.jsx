@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ButtonAdd from '../components/ButtonAdd';
+import Form from '../components/Form';
+import Coments from '../components/Coments';
 
 class ProductDetails extends React.Component {
   constructor(props) {
@@ -34,6 +36,8 @@ class ProductDetails extends React.Component {
           {title}
         </h2>
         <ButtonAdd id={ id } testId="product-detail-add-to-cart">Add</ButtonAdd>
+        <Form identifier={ id } />
+        <Coments />
       </div>
     );
   }
