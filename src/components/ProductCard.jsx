@@ -6,7 +6,6 @@ import ButtonAdd from './ButtonAdd';
 class ProductCard extends React.Component {
   render() {
     const { product: { id, title, thumbnail, price } } = this.props;
-    const { product } = this.props;
     return (
       <div data-testid="product">
         <Link to={ `/${id}` } data-testid="product-detail-link">
@@ -14,9 +13,6 @@ class ProductCard extends React.Component {
           <img src={ thumbnail } alt="" />
           {price}
         </Link>
-        { product.title }
-        <img src={ product.thumbnail } alt="" />
-        {product.price}
         <ButtonAdd id={ id } testId="product-add-to-cart">Add</ButtonAdd>
       </div>
     );
