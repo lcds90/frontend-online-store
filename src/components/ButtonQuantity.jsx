@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 class ButtonQuantity extends Component {
   constructor(props) {
@@ -9,7 +8,7 @@ class ButtonQuantity extends Component {
     };
   }
 
-/*     handleSubmit = () => {
+  /*     handleSubmit = () => {
       const { props: { onSubmit }, state: { quantity } } = this;
       onSubmit(quantity);
     } */
