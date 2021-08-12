@@ -92,7 +92,6 @@ class Home extends React.Component {
 
   renderProductList = () => {
     const { products, renderList } = this.state;
-
     if (!renderList) {
       return (
         <section data-testid="home-initial-message">

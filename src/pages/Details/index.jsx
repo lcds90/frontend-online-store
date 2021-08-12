@@ -8,6 +8,7 @@ class ProductDetails extends React.Component {
     super(props);
     this.state = {
       product: {},
+      shipping: false,
     };
   }
 
@@ -21,6 +22,7 @@ class ProductDetails extends React.Component {
     const results = await fetchResult.json();
     this.setState({
       product: results,
+      shipping: results.shipping.free_shipping,
     });
   }
 
@@ -90,7 +92,7 @@ class ProductDetails extends React.Component {
   }
 
   render() {
-    const { product: { title } } = this.state;
+    const { product: { title }, shipping } = this.state;
     const { match: { params: { id } } } = this.props;
     return (
       <div>
@@ -98,6 +100,7 @@ class ProductDetails extends React.Component {
         <h2 data-testid="product-detail-name">
           {title}
         </h2>
+        { shipping && <p data-testid="free-shipping">FRETE GRÁTIS</p> }
         {this.buttonQuantity()}
         {this.buttonAdd()}
         <Comments identifier={ id } />

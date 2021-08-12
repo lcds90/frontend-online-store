@@ -65,7 +65,7 @@ class ProductCart extends Component {
     return (
       <>
         <section data-testid="shopping-cart-product-name">
-          {product.title}
+          <h4>{product.title}</h4>
         </section>
         <article>
           {this.buttonQuantity()}
