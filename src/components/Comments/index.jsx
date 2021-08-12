@@ -15,24 +15,26 @@ class Form extends React.Component {
     };
   }
 
-  handleChange = ({ target: { name, value } }) => {
+  handleChange = (e) => {
+    e.preventDefault();
+    const { target: { name, value } } = e;
     const { identifier } = this.props;
-    // console.log({ target: { value } });
     this.setState({
       id: identifier,
       comentario: [{
         [name]: value,
       }],
     });
-    console.log(this.state);
   };
 
-  handleClick = () => {
-    localStorage.setItem('comentario', JSON.stringify(this.state));
+  handleForm = () => {
+    const comments = JSON.parse(localStorage.getItem('comentarios')) || [];
+    comments.push(this.state);
+    localStorage.setItem('comentarios', JSON.stringify(comments));
   }
 
   renderForm = () => (
-    <form>
+    <form onSubmit={ this.handleForm }>
       <label htmlFor="inputForm">
         <input
           type="email"
@@ -58,16 +60,19 @@ class Form extends React.Component {
         max="5"
         onChange={ this.handleChange }
       />
-      <button type="submit" onClick={ this.handleClick }>AVALIAR</button>
+      <button type="submit">AVALIAR</button>
     </form>
   )
 
-  renderList = () => (
-    <div>
-      ola
-      {/* {console.log(objs)} */}
-    </div>
-  )
+  renderList = () => {
+    const comments = JSON.parse(localStorage.getItem('comentarios')) || [];
+
+    return (
+      <div>
+        {comments.map((c) => <div>{JSON.stringify(c)}</div>)}
+      </div>
+    );
+  }
 
   render() {
     return (
