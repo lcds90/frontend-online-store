@@ -65,11 +65,13 @@ class Form extends React.Component {
   )
 
   renderList = () => {
-    const comments = JSON.parse(localStorage.getItem('comentarios')) || [];
-
+    const { identifier } = this.props;
+    const getComments = JSON.parse(localStorage.getItem('comentarios')) || [];
+    const comments = getComments.filter((c) => c.id === identifier);
+    if (comments.length === 0) return (<div>Sem avaliações disponíveis</div>);
     return (
       <div>
-        {comments.map((c) => <div>{JSON.stringify(c)}</div>)}
+        {comments.map((c, i) => <div key={ i }>{JSON.stringify(c)}</div>)}
       </div>
     );
   }
