@@ -44,9 +44,8 @@ class Home extends React.Component {
   renderHeader = () => {
     const { search } = this.state;
     return (
-      <>
+      <section>
         <label htmlFor="searchBar">
-          Pesquisar
           <input
             data-testid="query-input"
             id="searchBar"
@@ -64,7 +63,7 @@ class Home extends React.Component {
 
         </button>
         <Link data-testid="shopping-cart-button" to="/cart">Carrinho</Link>
-      </>
+      </section>
     );
   }
 
@@ -121,7 +120,7 @@ class Home extends React.Component {
       <main className={ style.main }>
         <header className={ style.header }>
           {this.renderHeader()}
-          <aside>
+          <aside className={ style.aside }>
             {this.renderCategories()}
           </aside>
         </header>
