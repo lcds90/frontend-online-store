@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Home, Cart, Details } from './pages';
+import { Home, Cart, Details, Checkout } from './pages';
 
 function App() {
   return (
@@ -10,6 +10,7 @@ function App() {
         <Route exact path="/" component={ Home } />
         <Route exact path="/cart" component={ Cart } />
         <Route exact path="/:id" render={ (props) => <Details { ...props } /> } />
+        <Route exact path="/cart/checkout" component={ Checkout } />
       </Switch>
     </BrowserRouter>
   );

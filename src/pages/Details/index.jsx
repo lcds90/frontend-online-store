@@ -98,6 +98,13 @@ class ProductDetails extends React.Component {
         <h2 data-testid="product-detail-name">
           {title}
         </h2>
+        <Link
+          to="/cart/checkout"
+        >
+          <button type="submit" data-testid="checkout-fullname">
+            Checkout
+          </button>
+        </Link>
         {this.buttonQuantity()}
         {this.buttonAdd()}
         <Comments identifier={ id } />
