@@ -1,12 +1,10 @@
 import React from 'react';
-import { ProductCart } from '../components';
+import { CartProduct } from '../../components';
 
-// Feito por Lucas Lima.
 class Cart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: 'Seu carrinho está vazio',
       products: [],
     };
   }
@@ -16,10 +14,8 @@ class Cart extends React.Component {
   }
 
   fetchList = async () => {
-    const productsId = JSON.parse(localStorage.getItem('cartList')) || [];
-    productsId.forEach(async (id) => {
-      const response = await fetch(`https://api.mercadolibre.com/items/${id}`);
-      const product = await response.json();
+    const products = JSON.parse(localStorage.getItem('cartList')) || [];
+    products.forEach((product) => {
       this.setState((prevState) => ({
         products: [...prevState.products, product],
       }));
@@ -27,14 +23,21 @@ class Cart extends React.Component {
   }
 
   render() {
-    const { message, products } = this.state;
+    const { products } = this.state;
+
+    if (products.length === 0) {
+      return (
+        <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
+      );
+    }
+
     return (
       <div>
-        <p data-testid="shopping-cart-empty-message">{ message }</p>
+
         <div>
           {
             products.map((product) => (
-              <ProductCart key={ product.title } product={ product } />
+              <CartProduct key={ product.title } product={ product } />
             ))
           }
         </div>
