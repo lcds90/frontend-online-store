@@ -105,11 +105,13 @@ class Home extends React.Component {
     return (
       <>
         <h3>Lista de Produtos</h3>
-        {
-          products.map((product) => (
-            <CardProduct product={ product } key={ product.id } />
-          ))
-        }
+        <article className={ style.list }>
+          {
+            products.map((product) => (
+              <CardProduct product={ product } key={ product.id } />
+            ))
+          }
+        </article>
       </>
     );
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import style from './style.module.css';
 
 class ProductCard extends React.Component {
   constructor(props) {
@@ -35,11 +36,14 @@ class ProductCard extends React.Component {
   render() {
     const { product: { id, title, thumbnail, price } } = this.props;
     return (
-      <div data-testid="product">
+      <div className={ style.card } data-testid="product">
+        { title }
+        <span className={ style.imgCircle }>
+          <img className={ style.img } src={ thumbnail } alt="" />
+        </span>
+        {price}
         <Link to={ `/${id}` } data-testid="product-detail-link">
-          { title }
-          <img src={ thumbnail } alt="" />
-          {price}
+          Ver detalhes
         </Link>
         {this.buttonAdd()}
       </div>

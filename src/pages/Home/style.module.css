@@ -3,6 +3,7 @@
   grid-template-columns: 1fr 2fr;
   grid-template-rows: 1fr;
   height: 100vh;
+  width: 100vw;
 }
 
 .header {
@@ -13,4 +14,14 @@
 .section {
   height: 100%;
   overflow: auto;
+  text-align: center;
+  width: 100%;
+}
+
+.list {
+  align-items: center;
+  display: grid;
+  gap: 50px;
+  grid-template-columns: 1fr 1fr;
+  padding: 20px;
 }
