@@ -62,15 +62,12 @@ class Form extends React.Component {
     </form>
   )
 
-  renderList = () => {
-    const objs = localStorage.getItem('comentario');
-    return (
-      <div>
-        ola
-        {/* {console.log(objs)} */}
-      </div>
-    );
-  }
+  renderList = () => (
+    <div>
+      ola
+      {/* {console.log(objs)} */}
+    </div>
+  )
 
   render() {
     return (
