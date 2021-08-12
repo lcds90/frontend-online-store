@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { CardProduct } from '../../components';
 import { getCategories, getProductsFromCategoryAndQuery } from '../../services/api';
+import style from './style.module.css';
 
 class Home extends React.Component {
   constructor() {
@@ -70,25 +71,23 @@ class Home extends React.Component {
   renderCategories = () => {
     const { categories } = this.state;
     return (
-      <aside>
-        <ul>
-          {categories.map(({ id, name }) => (
-            <li key={ id }>
-              <label htmlFor={ `input-${id}` }>
-                <input
-                  id={ `input-${id}` }
-                  type="radio"
-                  data-testid="category"
-                  name="categoryId"
-                  value={ id }
-                  onClick={ this.setRadioValueAsState }
-                />
-                {name}
-              </label>
-            </li>
-          ))}
-        </ul>
-      </aside>
+      <ul>
+        {categories.map(({ id, name }) => (
+          <li key={ id }>
+            <label htmlFor={ `input-${id}` }>
+              <input
+                id={ `input-${id}` }
+                type="radio"
+                data-testid="category"
+                name="categoryId"
+                value={ id }
+                onClick={ this.setRadioValueAsState }
+              />
+              {name}
+            </label>
+          </li>
+        ))}
+      </ul>
     );
   }
 
@@ -97,30 +96,36 @@ class Home extends React.Component {
 
     if (!renderList) {
       return (
-        <div data-testid="home-initial-message">
+        <section data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
-        </div>
+        </section>
       );
     }
 
     return (
-      <section>
+      <>
         <h3>Lista de Produtos</h3>
         {
           products.map((product) => (
             <CardProduct product={ product } key={ product.id } />
           ))
         }
-      </section>
+      </>
     );
   }
 
   render() {
     return (
-      <main>
-        {this.renderHeader()}
-        {this.renderCategories()}
-        {this.renderProductList()}
+      <main className={ style.main }>
+        <header className={ style.header }>
+          {this.renderHeader()}
+          <aside>
+            {this.renderCategories()}
+          </aside>
+        </header>
+        <section className={ style.section }>
+          {this.renderProductList()}
+        </section>
       </main>
     );
   }
