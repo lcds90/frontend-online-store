@@ -24,7 +24,6 @@ class Home extends React.Component {
   }
 
   setRadioValueAsState = ({ target: { value } }) => {
-    console.log(value);
     this.setState({ categoryId: value }, () => {
       this.fetchList();
     });

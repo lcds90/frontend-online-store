@@ -66,7 +66,8 @@ class Form extends React.Component {
     const objs = localStorage.getItem('comentario');
     return (
       <div>
-        {console.log(objs)}
+        ola
+        {/* {console.log(objs)} */}
       </div>
     );
   }

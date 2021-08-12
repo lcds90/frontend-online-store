@@ -24,7 +24,7 @@ class ProductDetails extends React.Component {
     });
   }
 
-  handleClick = ({ target: { name } }) => {
+  handleClickQtd = ({ target: { name } }) => {
     const { quantity } = this.state;
     if (name === 'minus') {
       if (quantity === 1) return;
@@ -48,7 +48,7 @@ class ProductDetails extends React.Component {
           data-testid="product-decrease-quantity"
           type="button"
           name="minus"
-          onClick={ this.handleClick }
+          onClick={ this.handleClickQtd }
         >
           -
         </button>
@@ -67,6 +67,28 @@ class ProductDetails extends React.Component {
     );
   }
 
+  handleClickAdd = () => {
+    const { product } = this.state;
+    const cartList = JSON.parse(localStorage.getItem('cartList')) || [];
+    cartList.push(product);
+    localStorage.setItem('cartList', JSON.stringify(cartList));
+    this.setState({ disabled: true });
+  }
+
+  buttonAdd = () => {
+    const { disabled } = this.state;
+    return (
+      <button
+        data-testid="product-detail-add-to-cart"
+        onClick={ this.handleClickAdd }
+        type="button"
+        disabled={ disabled }
+      >
+        Adicionar ao carrinho
+      </button>
+    );
+  }
+
   render() {
     const { product: { title } } = this.state;
     const { match: { params: { id } } } = this.props;
@@ -77,6 +99,7 @@ class ProductDetails extends React.Component {
           {title}
         </h2>
         {this.buttonQuantity()}
+        {this.buttonAdd()}
         <Comments identifier={ id } />
       </div>
     );
