@@ -9,6 +9,9 @@ class ProductDetails extends React.Component {
     this.state = {
       product: {},
       shipping: false,
+      quantity: 1,
+      availableQuantity: '',
+      disabledPlus: false,
     };
   }
 
@@ -23,19 +26,26 @@ class ProductDetails extends React.Component {
     this.setState({
       product: results,
       shipping: results.shipping.free_shipping,
+      availableQuantity: results.available_quantity,
     });
   }
 
   handleClickQtd = ({ target: { name } }) => {
-    const { quantity } = this.state;
+    const { quantity, availableQuantity } = this.state;
     if (name === 'minus') {
       if (quantity === 1) return;
       this.setState((prevProps) => ({
         quantity: prevProps.quantity - 1,
       }));
+      if (quantity <= availableQuantity) {
+        this.setState({ disabledPlus: false });
+      }
     }
 
     if (name === 'plus') {
+      if (quantity === availableQuantity - 1) {
+        this.setState({ disabledPlus: true });
+      }
       this.setState((prevProps) => ({
         quantity: prevProps.quantity + 1,
       }));
@@ -43,7 +53,7 @@ class ProductDetails extends React.Component {
   }
 
   buttonQuantity = () => {
-    const { quantity } = this.state;
+    const { quantity, disabledPlus } = this.state;
     return (
       <article>
         <button
@@ -60,8 +70,9 @@ class ProductDetails extends React.Component {
         <button
           data-testid="product-increase-quantity"
           name="plus"
-          onClick={ this.handleClick }
+          onClick={ this.handleClickQtd }
           type="button"
+          disabled={ disabledPlus }
         >
           +
         </button>
@@ -70,8 +81,9 @@ class ProductDetails extends React.Component {
   }
 
   handleClickAdd = () => {
-    const { product } = this.state;
+    const { product, quantity } = this.state;
     const cartList = JSON.parse(localStorage.getItem('cartList')) || [];
+    product.gotQuantity = quantity;
     cartList.push(product);
     localStorage.setItem('cartList', JSON.stringify(cartList));
     this.setState({ disabled: true });
@@ -92,7 +104,7 @@ class ProductDetails extends React.Component {
   }
 
   render() {
-    const { product: { title }, shipping } = this.state;
+    const { product: { title }, shipping, availableQuantity } = this.state;
     const { match: { params: { id } } } = this.props;
     return (
       <div>
@@ -103,6 +115,10 @@ class ProductDetails extends React.Component {
         { shipping && <p data-testid="free-shipping">FRETE GRÁTIS</p> }
         {this.buttonQuantity()}
         {this.buttonAdd()}
+        <p>
+          Quantidade disponivel:
+          { availableQuantity }
+        </p>
         <Comments identifier={ id } />
       </div>
     );
