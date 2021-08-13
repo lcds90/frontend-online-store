@@ -7,26 +7,44 @@ class ProductCart extends Component {
     this.state = {
       product: {},
       quantity: 1,
+      availableQuantity: props.product.available_quantity,
+      disabledPlus: false,
     };
   }
 
   componentDidMount() {
     const { product } = this.props;
     this.setProduct(product);
+    this.setQuantity();
   }
 
   setProduct = (product) => (this.setState({ product }))
 
+  setQuantity = () => {
+    const { product: { gotQuantity } } = this.props;
+    if (gotQuantity !== undefined) {
+      this.setState({
+        quantity: gotQuantity,
+      });
+    }
+  }
+
   handleClick = ({ target: { name } }) => {
-    const { quantity } = this.state;
+    const { quantity, availableQuantity } = this.state;
     if (name === 'minus') {
       if (quantity === 1) return;
       this.setState((prevProps) => ({
         quantity: prevProps.quantity - 1,
       }));
+      if (quantity <= availableQuantity) {
+        this.setState({ disabledPlus: false });
+      }
     }
 
     if (name === 'plus') {
+      if (quantity === availableQuantity - 1) {
+        this.setState({ disabledPlus: true });
+      }
       this.setState((prevProps) => ({
         quantity: prevProps.quantity + 1,
       }));
@@ -34,7 +52,8 @@ class ProductCart extends Component {
   }
 
   buttonQuantity = () => {
-    const { quantity } = this.state;
+    const { quantity, disabledPlus } = this.state;
+
     return (
       <article>
         <button
@@ -53,6 +72,7 @@ class ProductCart extends Component {
           name="plus"
           onClick={ this.handleClick }
           type="button"
+          disabled={ disabledPlus }
         >
           +
         </button>
@@ -65,7 +85,7 @@ class ProductCart extends Component {
     return (
       <>
         <section data-testid="shopping-cart-product-name">
-          {product.title}
+          <h4>{product.title}</h4>
         </section>
         <article>
           {this.buttonQuantity()}
@@ -76,7 +96,10 @@ class ProductCart extends Component {
 }
 
 ProductCart.propTypes = {
-  product: PropTypes.shape({}).isRequired,
+  product: PropTypes.shape({
+    available_quantity: PropTypes.number,
+    gotQuantity: PropTypes.number,
+  }).isRequired,
 };
 
 export default ProductCart;
