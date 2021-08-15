@@ -12,11 +12,13 @@ class ProductCard extends React.Component {
   }
 
   handleClick = () => {
-    const { product } = this.props;
+    const { product, onAdded } = this.props;
     const cartList = JSON.parse(localStorage.getItem('cartList')) || [];
+    product.quantity = 1;
     cartList.push(product);
     localStorage.setItem('cartList', JSON.stringify(cartList));
     this.setState({ disabled: true });
+    onAdded();
   }
 
   buttonAdd = () => {
@@ -34,7 +36,8 @@ class ProductCard extends React.Component {
   }
 
   render() {
-    const { product: { id, title, thumbnail, price } } = this.props;
+    const { product: { id, title, thumbnail, price, shipping } } = this.props;
+    const freeShipping = shipping.free_shipping;
     return (
       <div className={ style.card } data-testid="product">
         { title }
@@ -42,6 +45,7 @@ class ProductCard extends React.Component {
           <img className={ style.img } src={ thumbnail } alt="" />
         </span>
         {price}
+        { freeShipping && <p data-testid="free-shipping">FRETE GRÁTIS</p> }
         <Link to={ `/${id}` } data-testid="product-detail-link">
           Ver detalhes
         </Link>
@@ -57,7 +61,12 @@ ProductCard.propTypes = {
     thumbnail: PropTypes.string,
     price: PropTypes.number,
     id: PropTypes.string,
+    quantity: PropTypes.number,
+    shipping: PropTypes.shape({
+      free_shipping: PropTypes.bool,
+    }),
   }).isRequired,
+  onAdded: PropTypes.func.isRequired,
 };
 
 export default ProductCard;

@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { Comments } from '../../components';
+import { CartIcon, Comments } from '../../components';
 
 class ProductDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       product: {},
+      shipping: false,
+      quantity: 1,
+      availableQuantity: '',
+      notAvaliable: false,
     };
   }
 
@@ -19,29 +22,44 @@ class ProductDetails extends React.Component {
     const { match: { params: { id } } } = this.props;
     const fetchResult = await fetch(`https://api.mercadolibre.com/items/${id}`);
     const results = await fetchResult.json();
+    const cartList = JSON.parse(localStorage.getItem('cartList')) || [];
+    const foundProduct = cartList.find((p) => p.id === id);
+    // results.available_quantity
     this.setState({
       product: results,
+      shipping: results.shipping.free_shipping,
+      availableQuantity: 5,
+      disabled: !!foundProduct,
     });
   }
 
+  checkAvaliable = () => {
+    const { quantity, availableQuantity } = this.state;
+    if (quantity === availableQuantity) {
+      this.setState({ notAvaliable: true });
+      return;
+    }
+    this.setState({ notAvaliable: false });
+  }
+
   handleClickQtd = ({ target: { name } }) => {
-    const { quantity } = this.state;
+    const { quantity: number } = this.state;
     if (name === 'minus') {
-      if (quantity === 1) return;
+      if (number === 1) return;
       this.setState((prevProps) => ({
         quantity: prevProps.quantity - 1,
-      }));
+      }), this.checkAvaliable);
     }
 
     if (name === 'plus') {
       this.setState((prevProps) => ({
         quantity: prevProps.quantity + 1,
-      }));
+      }), this.checkAvaliable);
     }
   }
 
   buttonQuantity = () => {
-    const { quantity } = this.state;
+    const { quantity, notAvaliable } = this.state;
     return (
       <article>
         <button
@@ -58,8 +76,9 @@ class ProductDetails extends React.Component {
         <button
           data-testid="product-increase-quantity"
           name="plus"
-          onClick={ this.handleClick }
+          onClick={ this.handleClickQtd }
           type="button"
+          disabled={ notAvaliable }
         >
           +
         </button>
@@ -68,8 +87,9 @@ class ProductDetails extends React.Component {
   }
 
   handleClickAdd = () => {
-    const { product } = this.state;
+    const { product, quantity } = this.state;
     const cartList = JSON.parse(localStorage.getItem('cartList')) || [];
+    product.quantity = quantity;
     cartList.push(product);
     localStorage.setItem('cartList', JSON.stringify(cartList));
     this.setState({ disabled: true });
@@ -90,14 +110,15 @@ class ProductDetails extends React.Component {
   }
 
   render() {
-    const { product: { title } } = this.state;
+    const { product: { title }, shipping, availableQuantity } = this.state;
     const { match: { params: { id } } } = this.props;
     return (
       <div>
-        <Link data-testid="shopping-cart-button" to="/cart">Carrinho</Link>
+        <CartIcon />
         <h2 data-testid="product-detail-name">
           {title}
         </h2>
+
         <Link
           to="/cart/checkout"
         >
@@ -105,8 +126,15 @@ class ProductDetails extends React.Component {
             Checkout
           </button>
         </Link>
+
+        { shipping && <p data-testid="free-shipping">FRETE GRÁTIS</p> }
+
         {this.buttonQuantity()}
         {this.buttonAdd()}
+        <p>
+          Quantidade disponivel:
+          { availableQuantity }
+        </p>
         <Comments identifier={ id } />
       </div>
     );
