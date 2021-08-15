@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { Comments } from '../../components';
+import { CartIcon, Comments } from '../../components';
 
 class ProductDetails extends React.Component {
   constructor(props) {
@@ -83,7 +82,7 @@ class ProductDetails extends React.Component {
   handleClickAdd = () => {
     const { product, quantity } = this.state;
     const cartList = JSON.parse(localStorage.getItem('cartList')) || [];
-    product.gotQuantity = quantity;
+    product.quantity = quantity;
     cartList.push(product);
     localStorage.setItem('cartList', JSON.stringify(cartList));
     this.setState({ disabled: true });
@@ -108,7 +107,7 @@ class ProductDetails extends React.Component {
     const { match: { params: { id } } } = this.props;
     return (
       <div>
-        <Link data-testid="shopping-cart-button" to="/cart">Carrinho</Link>
+        <CartIcon />
         <h2 data-testid="product-detail-name">
           {title}
         </h2>

@@ -12,11 +12,13 @@ class ProductCard extends React.Component {
   }
 
   handleClick = () => {
-    const { product } = this.props;
+    const { product, onAdded } = this.props;
     const cartList = JSON.parse(localStorage.getItem('cartList')) || [];
+    product.quantity = 1;
     cartList.push(product);
     localStorage.setItem('cartList', JSON.stringify(cartList));
     this.setState({ disabled: true });
+    onAdded();
   }
 
   buttonAdd = () => {
@@ -59,10 +61,12 @@ ProductCard.propTypes = {
     thumbnail: PropTypes.string,
     price: PropTypes.number,
     id: PropTypes.string,
+    quantity: PropTypes.number,
     shipping: PropTypes.shape({
       free_shipping: PropTypes.bool,
     }),
   }).isRequired,
+  onAdded: PropTypes.func.isRequired,
 };
 
 export default ProductCard;

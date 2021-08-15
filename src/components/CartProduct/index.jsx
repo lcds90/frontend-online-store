@@ -21,10 +21,10 @@ class ProductCart extends Component {
   setProduct = (product) => (this.setState({ product }))
 
   setQuantity = () => {
-    const { product: { gotQuantity } } = this.props;
-    if (gotQuantity !== undefined) {
+    const { product: { quantity } } = this.props;
+    if (!quantity) {
       this.setState({
-        quantity: gotQuantity,
+        quantity,
       });
     }
   }
@@ -98,7 +98,7 @@ class ProductCart extends Component {
 ProductCart.propTypes = {
   product: PropTypes.shape({
     available_quantity: PropTypes.number,
-    gotQuantity: PropTypes.number,
+    quantity: PropTypes.number,
   }).isRequired,
 };
 
