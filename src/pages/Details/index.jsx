@@ -10,7 +10,7 @@ class ProductDetails extends React.Component {
       shipping: false,
       quantity: 1,
       availableQuantity: '',
-      disabledPlus: false,
+      notAvaliable: false,
     };
   }
 
@@ -22,37 +22,44 @@ class ProductDetails extends React.Component {
     const { match: { params: { id } } } = this.props;
     const fetchResult = await fetch(`https://api.mercadolibre.com/items/${id}`);
     const results = await fetchResult.json();
+    const cartList = JSON.parse(localStorage.getItem('cartList')) || [];
+    const foundProduct = cartList.find((p) => p.id === id);
+    // results.available_quantity
     this.setState({
       product: results,
       shipping: results.shipping.free_shipping,
-      availableQuantity: results.available_quantity,
+      availableQuantity: 5,
+      disabled: !!foundProduct,
     });
   }
 
-  handleClickQtd = ({ target: { name } }) => {
+  checkAvaliable = () => {
     const { quantity, availableQuantity } = this.state;
+    if (quantity === availableQuantity) {
+      this.setState({ notAvaliable: true });
+      return;
+    }
+    this.setState({ notAvaliable: false });
+  }
+
+  handleClickQtd = ({ target: { name } }) => {
+    const { quantity: number } = this.state;
     if (name === 'minus') {
-      if (quantity === 1) return;
+      if (number === 1) return;
       this.setState((prevProps) => ({
         quantity: prevProps.quantity - 1,
-      }));
-      if (quantity <= availableQuantity) {
-        this.setState({ disabledPlus: false });
-      }
+      }), this.checkAvaliable);
     }
 
     if (name === 'plus') {
-      if (quantity === availableQuantity - 1) {
-        this.setState({ disabledPlus: true });
-      }
       this.setState((prevProps) => ({
         quantity: prevProps.quantity + 1,
-      }));
+      }), this.checkAvaliable);
     }
   }
 
   buttonQuantity = () => {
-    const { quantity, disabledPlus } = this.state;
+    const { quantity, notAvaliable } = this.state;
     return (
       <article>
         <button
@@ -71,7 +78,7 @@ class ProductDetails extends React.Component {
           name="plus"
           onClick={ this.handleClickQtd }
           type="button"
-          disabled={ disabledPlus }
+          disabled={ notAvaliable }
         >
           +
         </button>
