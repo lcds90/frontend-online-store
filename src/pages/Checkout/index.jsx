@@ -1,19 +1,20 @@
 import React from 'react';
+import { CartProduct } from '../../components';
 
 class Checkout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      nome: '',
-      cpf: 0,
+      fullName: '',
+      cpf: '',
       email: '',
-      telefone: 0,
-      cep: 0,
-      endereço: '',
+      phone: '',
+      cep: '',
+      address: '',
       complemento: '',
       numero: 0,
       cityName: '',
-      stateName: '',
+      disabled: true,
     };
   }
 
@@ -23,17 +24,50 @@ class Checkout extends React.Component {
     });
   }
 
-  render() {
-    const { nome,
+  checkDisable = () => {
+    const { fullName,
       cpf,
       email,
-      telefone,
+      phone,
       cep,
-      endereço,
+      address,
       complemento,
       numero,
       cityName,
-      stateName,
+    } = this.state;
+    if (
+      fullName !== ''
+      || cpf !== 0
+      || email !== ''
+      || phone !== ''
+      || cep !== ''
+      || address !== '' || complemento !== '' || numero !== 0 || cityName !== '') {
+      this.setState({
+        disabled: false,
+      });
+      // console.log(this.state);
+    }
+  }
+
+  /* checkDisable = () => {
+    this.setState({
+      disabled: false,
+    });
+  } */
+
+  render() {
+    const local = JSON.parse(localStorage.getItem('cartList'));
+    // console.log(local);
+    const { fullName,
+      cpf,
+      email,
+      phone,
+      cep,
+      address,
+      complemento,
+      numero,
+      cityName,
+      disabled,
     } = this.state;
     const arrEstados = [
       'Estado',
@@ -67,24 +101,33 @@ class Checkout extends React.Component {
     ];
     return (
       <section>
-        <form action="" method="get">
+        {local.map((product) => (<CartProduct
+          key={ product.title }
+          product={ product }
+        />))}
+        <form
+          /* onSubmit={ every ? this.submitDefault : this.submitDefault } */
+          action=""
+          method="get"
+        >
           <label htmlFor="inputName">
             <input
               id="inputName"
               type="text"
               placeholder="Nome completo"
               data-testid="checkout-fullname"
-              name="nome"
-              value={ nome }
+              name="fullName"
+              value={ fullName }
               onChange={ this.handleChange }
+              required
             />
           </label>
           <label htmlFor="inputCPF">
             <input
-              type="number"
+              type="text"
               id="inputCPF"
               placeholder="CPF"
-              pattern="[0-9]{11}"
+              maxLength="11"
               data-testid="checkout-cpf"
               name="cpf"
               value={ cpf }
@@ -104,19 +147,18 @@ class Checkout extends React.Component {
           </label>
           <label htmlFor="inputTelefone">
             <input
-              type="tel"
+              type="text"
               id="inputTelefone"
               placeholder="Telefone"
-              pattern="\(\d{2,}\) \d{4,}\-\d{4}"
               data-testid="checkout-phone"
-              name="telefone"
-              value={ telefone }
+              name="phone"
+              value={ phone }
               onChange={ this.handleChange }
             />
           </label>
           <label htmlFor="inputCEP">
             <input
-              type="number"
+              type="text"
               id="inputCEP"
               placeholder="CEP"
               data-testid="checkout-cep"
@@ -131,8 +173,8 @@ class Checkout extends React.Component {
               id="inputEndereço"
               placeholder="Endereço"
               data-testid="checkout-address"
-              name="endereço"
-              value={ endereço }
+              name="address"
+              value={ address }
               onChange={ this.handleChange }
             />
           </label>
@@ -161,7 +203,7 @@ class Checkout extends React.Component {
               type="text"
               id="inputCidade"
               placeholder="Cidade"
-              name="Cidade"
+              name="cityName"
               value={ cityName }
               onChange={ this.handleChange }
             />
@@ -171,18 +213,22 @@ class Checkout extends React.Component {
               name="stateSelect"
               id="inputSelect"
               onChange={ this.handleChange }
-              value={ stateName }
+              onClick={ this.checkDisable }
+              // value={ stateName }
             >
               {arrEstados.map((estado) => (
                 <option
                   key={ estado }
                   name="stateName"
-                  value={ stateName }
+                  value={ estado }
                 >
                   { estado }
                 </option>))}
             </select>
           </label>
+          <button id="button" type="button" disabled={ disabled }>
+            clicar
+          </button>
         </form>
       </section>
     );
