@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { CartProduct } from '../../components';
 
 class Cart extends React.Component {
@@ -35,6 +36,11 @@ class Cart extends React.Component {
       <div>
 
         <div>
+          <Link to="/checkout">
+            <button data-testid="checkout-products" type="button">
+              Checkout
+            </button>
+          </Link>
           {
             products.map((product) => (
               <CartProduct key={ product.title } product={ product } />

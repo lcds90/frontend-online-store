@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { CartIcon, Comments } from '../../components';
 
@@ -118,7 +119,18 @@ class ProductDetails extends React.Component {
         <h2 data-testid="product-detail-name">
           {title}
         </h2>
+
+        <Link
+          to="/cart/checkout"
+        >
+          <button type="submit" data-testid="checkout-fullname">
+            Checkout
+          </button>
+        </Link>
         { shipping && <p data-testid="free-shipping">FRETE GRÁTIS</p> }
+
+        { shipping && <p data-testid="free-shipping">FRETE GRÁTIS</p> }
+
         {this.buttonQuantity()}
         {this.buttonAdd()}
         <p>

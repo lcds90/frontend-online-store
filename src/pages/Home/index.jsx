@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { CardProduct, CartIcon } from '../../components';
 import { getCategories, getProductsFromCategoryAndQuery } from '../../services/api';
 import style from './style.module.css';
@@ -136,6 +137,7 @@ class Home extends React.Component {
         <section className={ style.section }>
           {this.renderProductList()}
         </section>
+        <Link to="/checkout">Checkout</Link>
       </main>
     );
   }
