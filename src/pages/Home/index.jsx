@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CardProduct } from '../../components';
+import { CardProduct, CartIcon } from '../../components';
 import { getCategories, getProductsFromCategoryAndQuery } from '../../services/api';
 import style from './style.module.css';
 
@@ -13,6 +13,7 @@ class Home extends React.Component {
       search: '',
       categoryId: '',
       renderList: false,
+      productAdded: 0,
     };
   }
 
@@ -22,6 +23,12 @@ class Home extends React.Component {
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value });
+  }
+
+  handleAdd = () => {
+    this.setState((prevState) => ({
+      productAdded: prevState.productAdded + 1,
+    }));
   }
 
   setRadioValueAsState = ({ target: { value } }) => {
@@ -62,7 +69,7 @@ class Home extends React.Component {
           Pesquisar
 
         </button>
-        <Link data-testid="shopping-cart-button" to="/cart">Carrinho</Link>
+        <CartIcon />
       </section>
     );
   }
@@ -92,7 +99,6 @@ class Home extends React.Component {
 
   renderProductList = () => {
     const { products, renderList } = this.state;
-
     if (!renderList) {
       return (
         <section data-testid="home-initial-message">
@@ -107,7 +113,11 @@ class Home extends React.Component {
         <article className={ style.list }>
           {
             products.map((product) => (
-              <CardProduct product={ product } key={ product.id } />
+              <CardProduct
+                onAdded={ this.handleAdd }
+                product={ product }
+                key={ product.id }
+              />
             ))
           }
         </article>
