@@ -38,6 +38,7 @@ class CartButton extends Component {
           <span role="img" aria-label="carrinho">🛒</span>
         </Link>
         <span data-testid="shopping-cart-size">{ quantity }</span>
+        <Link to="/checkout">Checkout</Link>
       </article>
     );
   }
