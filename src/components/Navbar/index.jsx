@@ -1,14 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Nav } from './styles';
+import { Image, Home, Nav } from './styles';
+import logo from '../../assets/home.png';
 
 class Navbar extends React.Component {
   render() {
     const { children } = this.props;
     return (
       <Nav>
-        <Link to="/">Home</Link>
+        <Home to="/">
+          <Image src={ logo } alt="Pagina principal" />
+        </Home>
         {children}
       </Nav>
     );

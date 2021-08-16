@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Nav = styled
@@ -8,4 +9,11 @@ export const Nav = styled
   width: 100%;
 `;
 
-export default Nav;
+export const Home = styled(Link)`display: flex;
+  height: 100%;
+`;
+
+export const Image = styled
+  .img`height: auto;
+  max-width: 100%;
+`;
