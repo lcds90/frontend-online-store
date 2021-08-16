@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Article, Buy, Card, Details, FreeShipping, Image, Price, Title } from './styles';
+import { Article, Avaliable, Buy, Card,
+  Details, FreeShipping, Image, Price, Title } from './styles';
 
 class ProductCard extends React.Component {
   constructor(props) {
@@ -36,7 +37,8 @@ class ProductCard extends React.Component {
   }
 
   render() {
-    const { product: { id, title, thumbnail, price, shipping } } = this.props;
+    const { product: { id, title, thumbnail, price, shipping,
+      available_quantity: quantity } } = this.props;
     const freeShipping = shipping.free_shipping;
     return (
       <Card data-testid="product">
@@ -48,6 +50,9 @@ class ProductCard extends React.Component {
         { freeShipping
           && <FreeShipping data-testid="free-shipping">FRETE GRÁTIS</FreeShipping> }
         <Article>
+          <Avaliable>
+            {`Quantidade ${quantity}`}
+          </Avaliable>
           {this.buttonAdd()}
           <Details to={ `/${id}` } data-testid="product-detail-link">
             Ver detalhes
@@ -60,6 +65,7 @@ class ProductCard extends React.Component {
 
 ProductCard.propTypes = {
   product: PropTypes.shape({
+    available_quantity: PropTypes.number,
     title: PropTypes.string,
     thumbnail: PropTypes.string,
     price: PropTypes.number,
