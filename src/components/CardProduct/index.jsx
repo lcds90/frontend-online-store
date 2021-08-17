@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import style from './style.module.css';
+import { Article, Avaliable, Buy, Card,
+  Details, FreeShipping, Image, Price, Title } from './styles';
 
 class ProductCard extends React.Component {
   constructor(props) {
@@ -24,39 +24,48 @@ class ProductCard extends React.Component {
   buttonAdd = () => {
     const { disabled } = this.state;
     return (
-      <button
+      <Buy
         data-testid="product-add-to-cart"
         onClick={ this.handleClick }
         type="button"
         disabled={ disabled }
       >
-        Adicionar ao carrinho
-      </button>
+        +
+        <span aria-label="Comprar Item" role="img">🛍️</span>
+      </Buy>
     );
   }
 
   render() {
-    const { product: { id, title, thumbnail, price, shipping } } = this.props;
+    const { product: { id, title, thumbnail, price, shipping,
+      available_quantity: quantity } } = this.props;
     const freeShipping = shipping.free_shipping;
     return (
-      <div className={ style.card } data-testid="product">
-        { title }
-        <span className={ style.imgCircle }>
-          <img className={ style.img } src={ thumbnail } alt="" />
-        </span>
-        {price}
-        { freeShipping && <p data-testid="free-shipping">FRETE GRÁTIS</p> }
-        <Link to={ `/${id}` } data-testid="product-detail-link">
-          Ver detalhes
-        </Link>
-        {this.buttonAdd()}
-      </div>
+      <Card data-testid="product">
+        <Image thumbnail={ thumbnail } />
+        <Title>{ title }</Title>
+        <Price>
+          {`R$ ${price}`}
+        </Price>
+        { freeShipping
+          && <FreeShipping data-testid="free-shipping">FRETE GRÁTIS</FreeShipping> }
+        <Article>
+          <Avaliable>
+            {`Quantidade ${quantity}`}
+          </Avaliable>
+          {this.buttonAdd()}
+          <Details to={ `/${id}` } data-testid="product-detail-link">
+            Ver detalhes
+          </Details>
+        </Article>
+      </Card>
     );
   }
 }
 
 ProductCard.propTypes = {
   product: PropTypes.shape({
+    available_quantity: PropTypes.number,
     title: PropTypes.string,
     thumbnail: PropTypes.string,
     price: PropTypes.number,

@@ -1,5 +1,6 @@
 import React from 'react';
 import { CartProduct } from '../../components';
+import arrEstados from '../../data/states';
 
 class Checkout extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class Checkout extends React.Component {
       numero: 0,
       cityName: '',
       disabled: true,
+      payment: '',
     };
   }
 
@@ -34,6 +36,7 @@ class Checkout extends React.Component {
       complemento,
       numero,
       cityName,
+      payment,
     } = this.state;
     if (
       fullName !== ''
@@ -41,23 +44,16 @@ class Checkout extends React.Component {
       || email !== ''
       || phone !== ''
       || cep !== ''
-      || address !== '' || complemento !== '' || numero !== 0 || cityName !== '') {
+      || address !== ''
+      || complemento !== '' || numero !== 0 || cityName !== '' || payment !== '') {
       this.setState({
         disabled: false,
       });
-      // console.log(this.state);
     }
   }
 
-  /* checkDisable = () => {
-    this.setState({
-      disabled: false,
-    });
-  } */
-
   render() {
     const local = JSON.parse(localStorage.getItem('cartList'));
-    // console.log(local);
     const { fullName,
       cpf,
       email,
@@ -69,36 +65,6 @@ class Checkout extends React.Component {
       cityName,
       disabled,
     } = this.state;
-    const arrEstados = [
-      'Estado',
-      'Acre',
-      'Alagoas',
-      'Amapá',
-      'Amazonas',
-      'Bahia',
-      'Ceará',
-      'Distrito Federal',
-      'Espirito Santo',
-      'Goiás',
-      'Maranhão',
-      'Mato Grosso do Sul',
-      'Mato Grosso',
-      'Minas Gerais',
-      'Pará',
-      'Paraíba',
-      'Paraná',
-      'Pernambuco',
-      'Piauí',
-      'Rio de Janeiro',
-      'Rio Grande do Norte',
-      'Rio Grande do Sul',
-      'Rondônia',
-      'Roraima',
-      'Santa Catarina',
-      'São Paulo',
-      'Sergipe',
-      'Tocantins',
-    ];
     return (
       <section>
         {local.map((product) => (<CartProduct
@@ -106,8 +72,6 @@ class Checkout extends React.Component {
           product={ product }
         />))}
         <form
-          /* onSubmit={ every ? this.submitDefault : this.submitDefault } */
-          action=""
           method="get"
         >
           <label htmlFor="inputName">
@@ -132,6 +96,7 @@ class Checkout extends React.Component {
               name="cpf"
               value={ cpf }
               onChange={ this.handleChange }
+              required
             />
           </label>
           <label htmlFor="inputEmail">
@@ -143,6 +108,7 @@ class Checkout extends React.Component {
               name="email"
               value={ email }
               onChange={ this.handleChange }
+              required
             />
           </label>
           <label htmlFor="inputTelefone">
@@ -154,6 +120,7 @@ class Checkout extends React.Component {
               name="phone"
               value={ phone }
               onChange={ this.handleChange }
+              required
             />
           </label>
           <label htmlFor="inputCEP">
@@ -165,6 +132,7 @@ class Checkout extends React.Component {
               name="cep"
               value={ cep }
               onChange={ this.handleChange }
+              required
             />
           </label>
           <label htmlFor="inputEndereço">
@@ -214,7 +182,6 @@ class Checkout extends React.Component {
               id="inputSelect"
               onChange={ this.handleChange }
               onClick={ this.checkDisable }
-              // value={ stateName }
             >
               {arrEstados.map((estado) => (
                 <option
@@ -226,7 +193,49 @@ class Checkout extends React.Component {
                 </option>))}
             </select>
           </label>
-          <button id="button" type="button" disabled={ disabled }>
+          <h3>Boleto</h3>
+          <label htmlFor="radioBoleto">
+            Boleto
+            <input
+              type="radio"
+              name="payment"
+              id="radioBoleto"
+              onChange={ this.handleChange }
+              value="boleto"
+            />
+          </label>
+          <h3>Cartão de Credito</h3>
+          <label htmlFor="radioCartao">
+            Elo
+            <input
+              type="radio"
+              name="payment"
+              id="radioCartao"
+              onChange={ this.handleChange }
+              value="elo"
+            />
+          </label>
+          <label htmlFor="radioCartao">
+            MasterCard
+            <input
+              type="radio"
+              name="payment"
+              id="radioCartao"
+              onChange={ this.handleChange }
+              value="masterCard"
+            />
+          </label>
+          <label htmlFor="radioCartao">
+            Visa
+            <input
+              type="radio"
+              name="payment"
+              id="radioCartao"
+              onChange={ this.handleChange }
+              value="visa"
+            />
+          </label>
+          <button id="button" type="submit" disabled={ disabled }>
             clicar
           </button>
         </form>

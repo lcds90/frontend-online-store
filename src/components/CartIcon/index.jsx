@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { CartEmoji, CartQuantity, Container } from './styles';
 
 class CartButton extends Component {
   constructor(props) {
@@ -30,15 +31,16 @@ class CartButton extends Component {
   render() {
     const { quantity } = this.state;
     return (
-      <article>
-        <Link
+      <Container>
+        <CartEmoji
           data-testid="shopping-cart-button"
           to="/cart"
         >
           <span role="img" aria-label="carrinho">🛒</span>
-        </Link>
-        <span data-testid="shopping-cart-size">{ quantity }</span>
-      </article>
+          <CartQuantity data-testid="shopping-cart-size">{ quantity }</CartQuantity>
+        </CartEmoji>
+        <Link to="/checkout">Checkout</Link>
+      </Container>
     );
   }
 }

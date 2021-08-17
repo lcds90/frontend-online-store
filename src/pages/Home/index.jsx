@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { CardProduct, CartIcon } from '../../components';
+import { CardProduct, CartIcon, Navbar } from '../../components';
 import { getCategories, getProductsFromCategoryAndQuery } from '../../services/api';
-import style from './style.module.css';
+import { Aside,
+  Button, Categories, Category, Container, Input, Label,
+  List, SearchBar, Section } from './styles';
 
 class Home extends React.Component {
   constructor() {
@@ -48,38 +49,40 @@ class Home extends React.Component {
     this.setState({ products: results, renderList: true });
   }
 
-  renderHeader = () => {
+  renderNavbar = () => {
     const { search } = this.state;
     return (
-      <section>
-        <label htmlFor="searchBar">
-          <input
-            data-testid="query-input"
-            id="searchBar"
-            value={ search }
-            name="search"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <button
-          data-testid="query-button"
-          type="submit"
-          onClick={ this.fetchList }
-        >
-          Pesquisar
-
-        </button>
+      <>
+        <SearchBar>
+          <Label htmlFor="searchBar">
+            <Input
+              data-testid="query-input"
+              id="searchBar"
+              value={ search }
+              name="search"
+              onChange={ this.handleChange }
+              placeholder="Digite o termo aqui"
+            />
+          </Label>
+          <Button
+            data-testid="query-button"
+            type="submit"
+            onClick={ this.fetchList }
+          >
+            Pesquisar
+          </Button>
+        </SearchBar>
         <CartIcon />
-      </section>
+      </>
     );
   }
 
   renderCategories = () => {
     const { categories } = this.state;
     return (
-      <ul>
+      <Categories>
         {categories.map(({ id, name }) => (
-          <li key={ id }>
+          <Category key={ id }>
             <label htmlFor={ `input-${id}` }>
               <input
                 id={ `input-${id}` }
@@ -91,9 +94,9 @@ class Home extends React.Component {
               />
               {name}
             </label>
-          </li>
+          </Category>
         ))}
-      </ul>
+      </Categories>
     );
   }
 
@@ -110,7 +113,7 @@ class Home extends React.Component {
     return (
       <>
         <h3>Lista de Produtos</h3>
-        <article className={ style.list }>
+        <List>
           {
             products.map((product) => (
               <CardProduct
@@ -120,25 +123,25 @@ class Home extends React.Component {
               />
             ))
           }
-        </article>
+        </List>
       </>
     );
   }
 
   render() {
     return (
-      <main className={ style.main }>
-        <header className={ style.header }>
-          {this.renderHeader()}
-          <aside className={ style.aside }>
-            {this.renderCategories()}
-          </aside>
-        </header>
-        <section className={ style.section }>
+      <Container>
+        <Navbar>
+          {this.renderNavbar()}
+        </Navbar>
+        <Aside>
+          {this.renderCategories()}
+        </Aside>
+        <Section>
           {this.renderProductList()}
-        </section>
-        <Link to="/checkout">Checkout</Link>
-      </main>
+        </Section>
+
+      </Container>
     );
   }
 }
