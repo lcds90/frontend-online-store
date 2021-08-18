@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { CartEmoji, CartQuantity, Container } from './styles';
+import { CartEmoji, CartQuantity, Checkout, Container } from './styles';
 
 class CartButton extends Component {
   constructor(props) {
@@ -39,7 +38,7 @@ class CartButton extends Component {
           <span role="img" aria-label="carrinho">🛒</span>
           <CartQuantity data-testid="shopping-cart-size">{ quantity }</CartQuantity>
         </CartEmoji>
-        <Link to="/checkout">Checkout</Link>
+        <Checkout to="/checkout">Checkout</Checkout>
       </Container>
     );
   }

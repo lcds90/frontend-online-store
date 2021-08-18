@@ -42,8 +42,8 @@ class Cart extends React.Component {
             </button>
           </Link>
           {
-            products.map((product) => (
-              <CartProduct key={ product.title } product={ product } />
+            products.map((product, i) => (
+              <CartProduct key={ i } product={ product } />
             ))
           }
         </div>

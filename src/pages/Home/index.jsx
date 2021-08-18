@@ -4,6 +4,7 @@ import { getCategories, getProductsFromCategoryAndQuery } from '../../services/a
 import { Aside,
   Button, Categories, Category, Container, Input, Label,
   List, SearchBar, Section } from './styles';
+import searchSVG from '../../assets/search.svg';
 
 class Home extends React.Component {
   constructor() {
@@ -69,7 +70,13 @@ class Home extends React.Component {
             type="submit"
             onClick={ this.fetchList }
           >
-            Pesquisar
+            <img
+              width="20px"
+              height="20px"
+              src={ searchSVG }
+              alt="Pesquisar"
+              title="Pesquisar"
+            />
           </Button>
         </SearchBar>
         <CartIcon />

@@ -15,14 +15,14 @@ class ProductCart extends Component {
   componentDidMount() {
     const { product } = this.props;
     this.setProduct(product);
-    this.setQuantity();
   }
 
-  setProduct = (product) => (this.setState({ product }))
+  setProduct = (product) => (this.setState({ product }, () => {
+    this.setQuantity(product);
+  }))
 
-  setQuantity = () => {
-    const { product: { quantity } } = this.props;
-    if (!quantity) {
+  setQuantity = ({ quantity }) => {
+    if (quantity) {
       this.setState({
         quantity,
       });
@@ -35,7 +35,7 @@ class ProductCart extends Component {
       if (quantity === 1) return;
       this.setState((prevProps) => ({
         quantity: prevProps.quantity - 1,
-      }));
+      }), () => this.updateLocalStorage());
       if (quantity <= availableQuantity) {
         this.setState({ disabledPlus: false });
       }
@@ -47,12 +47,24 @@ class ProductCart extends Component {
       }
       this.setState((prevProps) => ({
         quantity: prevProps.quantity + 1,
-      }));
+      }), () => this.updateLocalStorage());
     }
   }
 
+  updateLocalStorage = () => {
+    const { product } = this.state;
+    const cartList = JSON.parse(localStorage.getItem('cartList')) || [];
+    cartList.forEach((p) => {
+      const { quantity } = this.state;
+      if (product.id === p.id) {
+        p.quantity = quantity;
+        localStorage.setItem('cartList', JSON.stringify(cartList));
+      }
+    });
+  }
+
   buttonQuantity = () => {
-    const { quantity, disabledPlus } = this.state;
+    const { quantity, disabledPlus, product } = this.state;
 
     return (
       <article>
@@ -60,7 +72,9 @@ class ProductCart extends Component {
           data-testid="product-decrease-quantity"
           type="button"
           name="minus"
-          onClick={ this.handleClick }
+          onClick={
+            this.handleClick
+          }
         >
           -
         </button>

@@ -21,6 +21,17 @@ export const CartEmoji = styled(Link)`align-items: center;
   width: 100px;
 `;
 
+export const Checkout = styled(Link)`align-items: center;
+  color: white;
+  display: flex;
+  font-size: 1.5rem;
+  height: 30px;
+  justify-content: center;
+  position: relative;
+  text-decoration: none;
+  width: 100px;
+`;
+
 export const CartQuantity = styled
   .span`bottom: 0;
   color: gold;

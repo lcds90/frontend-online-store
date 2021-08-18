@@ -24,7 +24,8 @@ export const Aside = styled
 export const SearchBar = styled
   .article`align-items: center;
   display: flex;
-  width: 50%;
+  position: relative;
+  width: 320px;
 `;
 
 export const Label = styled
@@ -36,7 +37,9 @@ export const Input = styled
   .input`border: 5px double ${({ theme: { colors } }) => colors.primary};
   border-radius: 25px;
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.12);
+  font-size: 13px;
   height: 100%;
+  text-align: center;
   width: 100%;
 
   ::placeholder {
@@ -45,11 +48,16 @@ export const Input = styled
 `;
 
 export const Button = styled
-  .button`background-color: ${({ theme: { colors } }) => colors.primary};
+  .button`background: transparent;
   border: 0;
-  border-radius: 0 10px 10px 0;
+  border-left: 0.5px black solid;
   color: white;
-  height: 2rem;
+  cursor: pointer;
+  height: 20px;
+  padding-bottom: 20px;
+  position: absolute;
+  right: 0;
+  width: 20px;
 `;
 
 export const Categories = styled
