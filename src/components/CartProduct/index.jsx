@@ -64,7 +64,7 @@ class ProductCart extends Component {
   }
 
   buttonQuantity = () => {
-    const { quantity, disabledPlus, product } = this.state;
+    const { quantity, disabledPlus } = this.state;
 
     return (
       <article>
