@@ -8,7 +8,7 @@ export const Container = styled
   display: flex;
   justify-content: space-between;
   padding: 2.5px 50px;
-  width: 25%;
+  width: 50%;
 `;
 
 export const CartEmoji = styled(Link)`align-items: center;
