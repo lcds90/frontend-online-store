@@ -1,79 +1,97 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormUserComment, UsersAvaliations } from './styles';
+import ReactStars from 'react-rating-stars-component';
+import { Comment, CommentSection, FormUserComment, UsersAvaliations, FormStyle } from './styles';
 
 class Form extends React.Component {
   constructor() {
     super();
     this.state = {
-      comentario: [
-        {
-          email: '',
-          stars: 1,
-          comments: '',
-        },
-      ],
+      email: '',
+      stars: 1,
+      comment: '',
     };
   }
 
   handleChange = (e) => {
     e.preventDefault();
     const { target: { name, value } } = e;
-    const { identifier } = this.props;
+
     this.setState({
-      id: identifier,
-      comentario: [{
-        [name]: value,
-      }],
+      [name]: value,
     });
   };
 
-  handleForm = () => {
+  handleForm = (e) => {
+    e.preventDefault();
     const comments = JSON.parse(localStorage.getItem('comentarios')) || [];
-    comments.push(this.state);
-    localStorage.setItem('comentarios', JSON.stringify(comments));
+    const { identifier } = this.props;
+    this.setState({ id: identifier }, () => {
+      comments.push(this.state);
+      localStorage.setItem('comentarios', JSON.stringify(comments));
+    });
   }
 
-  renderForm = () => (
-    <form onSubmit={ this.handleForm }>
-      <label htmlFor="inputForm">
-        <input
-          type="email"
-          name="email"
-          id="inputForm"
-          placeholder="Email"
+  renderForm = () => {
+    const { email, stars, comment } = this.state;
+    return (
+      <FormStyle onSubmit={ this.handleForm }>
+        <caption>Deixe sua avaliação</caption>
+        <label htmlFor="inputForm">
+          <input
+            type="email"
+            name="email"
+            id="inputForm"
+            placeholder="Email"
+            onChange={ this.handleChange }
+            className="uk-input"
+            value={ email }
+          />
+        </label>
+        <textarea
+          data-testid="product-detail-evaluation"
+          name="comment"
+          id="areaInput"
+          cols="30"
+          rows="10"
+          placeholder="Mensagem (opcional) "
           onChange={ this.handleChange }
+          className="uk-textarea"
+          value={ comment }
+
         />
-      </label>
-      <textarea
-        data-testid="product-detail-evaluation"
-        name="comments"
-        id="areaInput"
-        cols="30"
-        rows="10"
-        placeholder="Mensagem(opcional)"
-        onChange={ this.handleChange }
-      />
-      <input
-        type="number"
-        name="stars"
-        min="0"
-        max="5"
-        onChange={ this.handleChange }
-      />
-      <button type="submit">AVALIAR</button>
-    </form>
-  )
+        <input
+          type="number"
+          name="stars"
+          min="0"
+          max="5"
+          onChange={ this.handleChange }
+          className="uk-input"
+          value={ stars }
+        />
+        <button className="uk-button uk-button-secondary uk-width-1-1" type="submit">AVALIAR</button>
+      </FormStyle>
+    );
+  }
 
   renderList = () => {
     const { identifier } = this.props;
     const getComments = JSON.parse(localStorage.getItem('comentarios')) || [];
     const comments = getComments.filter((c) => c.id === identifier);
-    if (comments.length === 0) return (<div>Sem avaliações disponíveis</div>);
+    if (comments.length === 0) return (<CommentSection>Sem avaliações disponíveis</CommentSection>);
     return (
-      <div>
-        {comments.map((c, i) => <div key={ i }>{JSON.stringify(c)}</div>)}
-      </div>
+      <CommentSection>
+        {comments.map(({ comment, email, stars }, i) => (
+          <Comment
+            key={ i }
+          >
+            {`Usuário ${email}`}
+            <ReactStars count={ stars } color="#FFD700" />
+            <p>
+              {comment}
+            </p>
+          </Comment>))}
+      </CommentSection>
     );
   }
 
@@ -90,8 +108,5 @@ class Form extends React.Component {
     );
   }
 }
-Form.propTypes = {
-  identifier: PropTypes.string.isRequired,
-};
 
 export default Form;

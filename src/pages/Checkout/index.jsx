@@ -1,6 +1,7 @@
 import React from 'react';
 import { CartProduct } from '../../components';
 import arrEstados from '../../data/states';
+import { Container } from './styles';
 
 class Checkout extends React.Component {
   constructor(props) {
@@ -66,15 +67,17 @@ class Checkout extends React.Component {
       disabled,
     } = this.state;
     return (
-      <section>
+      <Container>
         {local.map((product) => (<CartProduct
           key={ product.title }
           product={ product }
         />))}
         <form
           method="get"
+          uk-grid="true"
+          style={ { alignItems: 'baseline' } }
         >
-          <label htmlFor="inputName">
+          <label className="uk-margin uk-width-1-4" htmlFor="inputName">
             <input
               id="inputName"
               type="text"
@@ -84,9 +87,10 @@ class Checkout extends React.Component {
               value={ fullName }
               onChange={ this.handleChange }
               required
+              className="uk-form-large"
             />
           </label>
-          <label htmlFor="inputCPF">
+          <label className="uk-margin uk-width-1-4" htmlFor="inputCPF">
             <input
               type="text"
               id="inputCPF"
@@ -97,9 +101,10 @@ class Checkout extends React.Component {
               value={ cpf }
               onChange={ this.handleChange }
               required
+              className=" uk-form-large"
             />
           </label>
-          <label htmlFor="inputEmail">
+          <label className="uk-margin uk-width-1-4" htmlFor="inputEmail">
             <input
               type="email"
               id="inputEmail"
@@ -109,9 +114,10 @@ class Checkout extends React.Component {
               value={ email }
               onChange={ this.handleChange }
               required
+              className=" uk-form-large"
             />
           </label>
-          <label htmlFor="inputTelefone">
+          <label className="uk-margin uk-width-1-4" htmlFor="inputTelefone">
             <input
               type="text"
               id="inputTelefone"
@@ -121,9 +127,10 @@ class Checkout extends React.Component {
               value={ phone }
               onChange={ this.handleChange }
               required
+              className=" uk-form-large"
             />
           </label>
-          <label htmlFor="inputCEP">
+          <label className="uk-margin uk-width-1-4" htmlFor="inputCEP">
             <input
               type="text"
               id="inputCEP"
@@ -133,9 +140,10 @@ class Checkout extends React.Component {
               value={ cep }
               onChange={ this.handleChange }
               required
+              className="uk-form-large"
             />
           </label>
-          <label htmlFor="inputEndereço">
+          <label className="uk-margin uk-width-1-4" htmlFor="inputEndereço">
             <input
               type="text"
               id="inputEndereço"
@@ -144,9 +152,10 @@ class Checkout extends React.Component {
               name="address"
               value={ address }
               onChange={ this.handleChange }
+              className="uk-form-large"
             />
           </label>
-          <label htmlFor="inputComplemento">
+          <label className="uk-margin uk-width-1-4" htmlFor="inputComplemento">
             <input
               type="text"
               id="inputComplemento"
@@ -154,9 +163,10 @@ class Checkout extends React.Component {
               name="complemento"
               value={ complemento }
               onChange={ this.handleChange }
+              className=" uk-form-large"
             />
           </label>
-          <label htmlFor="inputNumero">
+          <label className="uk-margin uk-width-1-4" htmlFor="inputNumero">
             <input
               type="number"
               id="inputNumero"
@@ -164,9 +174,10 @@ class Checkout extends React.Component {
               name="numero"
               value={ numero }
               onChange={ this.handleChange }
+              className="uk-form-large"
             />
           </label>
-          <label htmlFor="inputCidade">
+          <label className="uk-margin uk-width-1-2" htmlFor="inputCidade">
             <input
               type="text"
               id="inputCidade"
@@ -174,14 +185,16 @@ class Checkout extends React.Component {
               name="cityName"
               value={ cityName }
               onChange={ this.handleChange }
+              className="uk-input "
             />
           </label>
-          <label htmlFor="inputSelect">
+          <label className="uk-margin uk-width-1-2" htmlFor="inputSelect">
             <select
               name="stateSelect"
               id="inputSelect"
               onChange={ this.handleChange }
               onClick={ this.checkDisable }
+              className="uk-select"
             >
               {arrEstados.map((estado) => (
                 <option
@@ -193,8 +206,8 @@ class Checkout extends React.Component {
                 </option>))}
             </select>
           </label>
-          <h3>Boleto</h3>
-          <label htmlFor="radioBoleto">
+          <h3 className="uk-margin uk-width-1-6">Boleto</h3>
+          <label className="uk-margin uk-width-1-6" htmlFor="radioBoleto">
             Boleto
             <input
               type="radio"
@@ -202,10 +215,11 @@ class Checkout extends React.Component {
               id="radioBoleto"
               onChange={ this.handleChange }
               value="boleto"
+              className="uk-radio"
             />
           </label>
-          <h3>Cartão de Credito</h3>
-          <label htmlFor="radioCartao">
+          <h3 className="uk-margin uk-width-1-6">Cartão de Credito</h3>
+          <label className="uk-margin uk-width-1-6" htmlFor="radioCartao">
             Elo
             <input
               type="radio"
@@ -213,9 +227,10 @@ class Checkout extends React.Component {
               id="radioCartao"
               onChange={ this.handleChange }
               value="elo"
+              className="uk-radio"
             />
           </label>
-          <label htmlFor="radioCartao">
+          <label className="uk-margin uk-width-1-6" htmlFor="radioCartao">
             MasterCard
             <input
               type="radio"
@@ -223,9 +238,10 @@ class Checkout extends React.Component {
               id="radioCartao"
               onChange={ this.handleChange }
               value="masterCard"
+              className="uk-radio"
             />
           </label>
-          <label htmlFor="radioCartao">
+          <label className="uk-margin uk-width-1-6" htmlFor="radioCartao">
             Visa
             <input
               type="radio"
@@ -233,13 +249,14 @@ class Checkout extends React.Component {
               id="radioCartao"
               onChange={ this.handleChange }
               value="visa"
+              className="uk-radio"
             />
           </label>
-          <button id="button" type="submit" disabled={ disabled }>
-            clicar
+          <button className="uk-button-primary uk-width-1-1" id="button" type="submit" disabled={ disabled }>
+            Confirmar
           </button>
         </form>
-      </section>
+      </Container>
     );
   }
 }

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled
   .main`background-color: ${({ theme: { colors } }) => colors.background};
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 3fr;
   grid-template-rows: 6vh 1fr;
   height: 100vh;
   max-width: 100%;
@@ -72,6 +72,7 @@ export const Category = styled
   background-color: ${({ theme: { colors } }) => colors.primary};
   border-radius: 15px;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+  color: white;
   display: flex;
   font-size: 0.75rem;
   font-weight: 300;

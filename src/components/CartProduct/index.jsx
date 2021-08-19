@@ -67,7 +67,7 @@ class ProductCart extends Component {
     const { quantity, disabledPlus } = this.state;
 
     return (
-      <article>
+      <article className="uk-width-1-1 uk-flex uk-flex-center" uk-grid="true">
         <button
           data-testid="product-decrease-quantity"
           type="button"
@@ -78,9 +78,9 @@ class ProductCart extends Component {
         >
           -
         </button>
-        <div data-testid="shopping-cart-product-quantity">
+        <span className="uk-flex uk-flex-center uk-text-center" data-testid="shopping-cart-product-quantity">
           {quantity}
-        </div>
+        </span>
         <button
           data-testid="product-increase-quantity"
           name="plus"
@@ -97,14 +97,14 @@ class ProductCart extends Component {
   render() {
     const { product } = this.state;
     return (
-      <>
-        <section data-testid="shopping-cart-product-name">
-          <h4>{product.title}</h4>
+      <div className="uk-grid-small uk-flex uk-flex-center" uk-grid="true">
+        <section className="uk-width-1-1 uk-flex uk-flex-center" data-testid="shopping-cart-product-name">
+          <h4 className="uk-width-1-1 uk-flex uk-flex-center">{product.title}</h4>
         </section>
-        <article>
+        <article className="uk-width-1-1 uk-flex uk-flex-center">
           {this.buttonQuantity()}
         </article>
-      </>
+      </div>
     );
   }
 }

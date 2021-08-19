@@ -154,7 +154,7 @@ class ProductDetails extends React.Component {
               {this.buttonAdd()}
             </ButtonsContainer>
           </Div>
-          <Description>
+          <Description style={ { flexFlow: 'wrap' } }>
             {description}
           </Description>
           <Price>

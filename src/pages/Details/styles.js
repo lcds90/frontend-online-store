@@ -8,6 +8,7 @@ export const Container = styled
   grid-template-rows: 50px 1.5fr 1fr;
   height: 100vh;
   max-width: 100%;
+  overflow: auto;
   width: 100vw;
 `;
 
@@ -55,13 +56,12 @@ export const CarouselImages = styled(Carousel)`align-content: center;
 
 export const Price = styled
   .span`background-color: ${({ theme: { colors } }) => colors.primary};
-  bottom: 0;
+  bottom: -40px;
   color: white;
   padding: 10px;
   position: absolute;
   right: 0;
   text-align: center;
-  text-align: right;
   width: 100%;
   z-index: 1;
 `;
@@ -84,18 +84,14 @@ export const FreeShipping = styled
 
 export const Avaliable = styled
   .span`align-items: center;
-  background-color: ${({ theme: { colors } }) => colors.text};
-  bottom: 7rem;
-  box-shadow: 0 2px 3px rgba(100, 100, 100, 0.75);
-  color: white;
+  bottom: 9rem;
+  color: ${({ theme: { colors } }) => colors.text};
   display: flex;
-  height: 2rem;
+  font-weight: 300;
   justify-content: center;
-  padding: 10px 0;
   position: absolute;
-  right: 0;
+  right: 10px;
   white-space: nowrap;
-  width: 50%;
   z-index: 1;
 `;
 
